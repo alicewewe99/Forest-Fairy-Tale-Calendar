@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDFBF7"/>
+      <stop offset="100%" stop-color="#F4EADB"/>
+    </linearGradient>
+    <linearGradient id="squirrelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#DE893C"/>
+      <stop offset="100%" stop-color="#BA621C"/>
+    </linearGradient>
+  </defs>
+  <rect x="16" y="16" width="480" height="480" rx="100" fill="url(#bgGrad)" stroke="#A2D2FF" stroke-width="12"/>
+  <ellipse cx="160" cy="140" rx="24" ry="34" fill="#BA621C"/>
+  <ellipse cx="230" cy="135" rx="22" ry="32" fill="#BA621C"/>
+  <ellipse cx="195" cy="205" rx="72" ry="65" fill="url(#squirrelGrad)"/>
+  <ellipse cx="145" cy="225" rx="34" ry="32" fill="#FDF0DF"/>
+  <ellipse cx="245" cy="225" rx="34" ry="32" fill="#FDF0DF"/>
+  <path d="M155 198 Q170 185 185 198" stroke="#3A1E06" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <path d="M205 198 Q220 185 235 198" stroke="#3A1E06" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <circle cx="142" cy="216" r="14" fill="#FF8FAB"/>
+  <circle cx="248" cy="216" r="14" fill="#FF8FAB"/>
+  <circle cx="310" cy="115" r="28" fill="#2B2D42"/>
+  <circle cx="430" cy="130" r="28" fill="#2B2D42"/>
+  <ellipse cx="370" cy="205" rx="76" ry="70" fill="#FFFFFF" stroke="#2B2D42" stroke-width="5"/>
+  <ellipse cx="330" cy="200" rx="22" ry="28" fill="#2B2D42"/>
+  <ellipse cx="410" cy="205" rx="22" ry="28" fill="#2B2D42"/>
+  <circle cx="310" cy="226" r="15" fill="#FF8FAB"/>
+  <circle cx="430" cy="230" r="15" fill="#FF8FAB"/>
+  <rect x="120" y="245" width="272" height="215" rx="16" fill="#FFFFFF" stroke="#1D3557" stroke-width="5"/>
+  <rect x="135" y="327" width="33" height="28" fill="#F8BBD0" rx="3"/>
+  <text x="152" y="347" font-family="sans-serif" font-weight="bold" font-size="14" fill="#C2185B" text-anchor="middle">7</text>
+  <rect x="136" y="387" width="33" height="28" fill="#F8BBD0" rx="3"/>
+  <text x="152" y="407" font-family="sans-serif" font-weight="bold" font-size="14" fill="#C2185B" text-anchor="middle">21</text>
+  <path d="M328 426 C328 421 334 418 338 422 C342 418 348 421 348 426 C348 433 338 439 338 439 C338 439 328 433 328 426 Z" fill="#E63946"/>
+</svg>

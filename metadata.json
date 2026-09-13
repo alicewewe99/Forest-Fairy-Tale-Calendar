@@ -1,0 +1,6 @@
+{
+  "name": "花栗鼠童話月曆",
+  "description": "花栗鼠與貓熊童話月曆（2026~2033年），包含農曆節氣、國定假期、彩虹卡、鎮海宮靈籤、浪漫天使指引卡、台灣好神卡、月相神諭卡、愛的解答之書與YES/NO愛情指引。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
