@@ -23,9 +23,9 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center space-x-2.5">
           <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#FFFBF4] border-2 border-[#D4A373] flex items-center justify-center shadow-inner overflow-hidden flex-shrink-0 p-0.5">
             <img 
-              src="/icon.svg" 
+              src="/apple-touch-icon.png" 
               alt="花栗鼠與貓熊童話月曆" 
-              className="w-full h-full object-contain"
+              className="w-full h-full object-cover rounded-xl"
               referrerPolicy="no-referrer"
             />
           </div>

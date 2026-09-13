@@ -2,6 +2,8 @@ export interface HolidayInfo {
   name: string;
   isOff: boolean;
   label: string;
+  isNationalHoliday?: boolean;
+  isCompensatoryOff?: boolean;
 }
 
 export interface DayData {

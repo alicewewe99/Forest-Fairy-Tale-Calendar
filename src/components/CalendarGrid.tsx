@@ -85,7 +85,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
         id={`calCell-${dateKey}`}
         onClick={() => onCellClick(dateKey)}
         className={`h-[76px] sm:h-[88px] rounded-xl p-1 sm:p-1.5 flex flex-col justify-between transition-all duration-150 cursor-pointer border ${bgClass} ${todayRing}`}
-        title={`${dateKey} 農曆${lunar}${holiday ? ` (${holiday.name})` : ''}`}
+        title={`${dateKey} 農曆：${lunar}${holiday ? ` • ${holiday.name}` : ''}`}
       >
         {/* Top: Day number + Badges */}
         <div className="w-full flex items-center justify-between leading-none pointer-events-none">
@@ -98,7 +98,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
                 今日
               </span>
             )}
-            {holiday && holiday.isOff && (
+            {holiday && holiday.isNationalHoliday && (
               <span className="text-[9px] px-1 py-0.5 rounded font-black bg-[#C2185B] text-white leading-none shadow-2xs">
                 國定假
               </span>
@@ -119,10 +119,10 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
           )}
         </div>
 
-        {/* Bottom: Holiday label or Solar term / Lunar text */}
+        {/* Bottom: Subtext (Festival, Solar term, Lunar month/day) */}
         <div className="w-full text-center px-0.5 pointer-events-none leading-none">
-          <span className={`text-[9px] sm:text-[10px] truncate block ${textLunarClass}`}>
-            {holiday ? holiday.label : lunar}
+          <span className={`text-[9px] sm:text-[10px] font-bold truncate block ${textLunarClass}`}>
+            {lunar}
           </span>
         </div>
       </div>
@@ -150,6 +150,14 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
     );
   }
 
+  // Count total off days this month
+  let totalOffDays = 0;
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dayOfWeek = (firstDay + d - 1) % 7;
+    const { isOff } = getHolidayInfo(currentYear, currentMonth, d, dayOfWeek);
+    if (isOff) totalOffDays++;
+  }
+
   return (
     <div className="bg-[#FFFDF9] border-2 border-[#D4A373] rounded-2xl p-2 sm:p-3 shadow-md">
       {/* Week Headers */}
@@ -173,6 +181,29 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
         {prevCells}
         {currentCells}
         {nextCells}
+      </div>
+
+      {/* Official Calendar Legend & Monthly Day-Off Summary */}
+      <div className="mt-3 pt-2.5 border-t border-[#E9DAC1] flex flex-wrap items-center justify-between gap-2.5 text-xs text-[#6F441F]">
+        <div className="flex items-center gap-3 flex-wrap">
+          <span className="font-bold text-[#582F0E]">日曆圖例：</span>
+          <span className="inline-flex items-center gap-1.5 bg-[#FAF6F0] px-2 py-0.5 rounded-md border border-[#E9DAC1]">
+            <span className="w-3.5 h-3.5 border border-[#D4A373] bg-white rounded"></span>
+            <span className="font-medium text-[#4A3525]">上班日</span>
+          </span>
+          <span className="inline-flex items-center gap-1.5 bg-[#FDE2E4]/40 px-2 py-0.5 rounded-md border border-[#F48FB1]/60">
+            <span className="w-3.5 h-3.5 border border-[#F48FB1] bg-[#F8BBD0] rounded"></span>
+            <span className="text-[#C2185B] font-bold">放假日</span>
+          </span>
+          <span className="inline-flex items-center gap-1.5 bg-[#FAF6F0] px-2 py-0.5 rounded-md border border-[#E9DAC1]">
+            <span className="text-[9px] px-1 py-0.5 rounded font-black bg-[#C2185B] text-white leading-none">國定假</span>
+            <span className="font-medium text-[#4A3525]">國定假日</span>
+          </span>
+        </div>
+
+        <div className="text-xs text-[#6F441F] font-bold bg-[#FAF0CA] px-2.5 py-1 rounded-lg border border-[#E0A96D]">
+          本月放假天數：<span className="text-[#C2185B] font-black text-sm">{totalOffDays}</span> 天
+        </div>
       </div>
     </div>
   );

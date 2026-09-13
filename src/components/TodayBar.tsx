@@ -1,6 +1,6 @@
 import React from 'react';
 import { Copy, RotateCcw, CalendarDays } from 'lucide-react';
-import { getLunarText } from '../data/calendarData';
+import { getFullLunarInfo } from '../data/calendarData';
 
 interface TodayBarProps {
   onCopyToday: () => void;
@@ -14,10 +14,10 @@ export const TodayBar: React.FC<TodayBarProps> = ({ onCopyToday, onGoToToday }) 
   const d = now.getDate();
   const weekDays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
   const w = weekDays[now.getDay()];
-  const lunar = getLunarText(y, m, d);
+  const lunarInfo = getFullLunarInfo(y, m, d);
 
   // Exact user requested format: 年月日農曆日期星期
-  const todayFormattedString = `${y}年${m + 1}月${d}日 農曆${lunar} ${w}`;
+  const todayFormattedString = `${y}年${m + 1}月${d}日 農曆${lunarInfo.monthName}${lunarInfo.dayName}${lunarInfo.jieQi ? ` (${lunarInfo.jieQi})` : ''} ${w}`;
 
   return (
     <div className="bg-[#FFFDF9] border border-[#E9DAC1] rounded-2xl p-2.5 sm:p-3 flex flex-wrap items-center justify-between gap-2.5 shadow-sm">

@@ -1,145 +1,316 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
   <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FDFBF7"/>
-      <stop offset="100%" stop-color="#F4EADB"/>
+    <!-- Background subtle gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FCF9F3"/>
+      <stop offset="100%" stop-color="#F7F1E6"/>
     </linearGradient>
-    <linearGradient id="squirrelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#DE893C"/>
-      <stop offset="100%" stop-color="#BA621C"/>
+
+    <!-- Chipmunk Fur Gradient -->
+    <linearGradient id="chipmunkFur" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E89B48"/>
+      <stop offset="60%" stop-color="#D57C26"/>
+      <stop offset="100%" stop-color="#B86115"/>
     </linearGradient>
-    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#5A3A1A" flood-opacity="0.18"/>
+
+    <!-- Calendar Spiral Ring Metallic Gradient -->
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8BB3CE"/>
+      <stop offset="40%" stop-color="#FFFFFF"/>
+      <stop offset="80%" stop-color="#497290"/>
+    </linearGradient>
+
+    <!-- Soft Drop Shadow Filter -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#3D2817" flood-opacity="0.14"/>
+    </filter>
+
+    <filter id="calendarShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="12" stdDeviation="16" flood-color="#1A2D42" flood-opacity="0.18"/>
     </filter>
   </defs>
 
-  <!-- App Icon Base with Soft Rounded Border (Like IMG_4566) -->
-  <rect x="16" y="16" width="480" height="480" rx="100" fill="url(#bgGrad)" stroke="#A2D2FF" stroke-width="12" filter="url(#softShadow)"/>
+  <!-- ========================================== -->
+  <!-- 1. APP ICON SQUIRCLE CONTAINER & BLUE RIM  -->
+  <!-- ========================================== -->
+  <rect x="44" y="44" width="936" height="936" rx="200" ry="200" 
+        fill="url(#bgGrad)" 
+        stroke="#9ACDF2" 
+        stroke-width="26" 
+        filter="url(#cardShadow)" />
 
-  <!-- Left: Cute Brown Striped Chipmunk (花栗鼠) -->
-  <!-- Tail -->
-  <path d="M120 380 C40 360 20 280 60 220 C85 180 130 190 140 230 C150 270 120 330 160 370 Z" fill="#DE893C" stroke="#7A3E11" stroke-width="5"/>
-  <path d="M85 220 C100 240 100 290 85 330" stroke="#5A2E0C" stroke-width="8" stroke-linecap="round" fill="none"/>
-
-  <!-- Chipmunk Ears -->
-  <ellipse cx="160" cy="140" rx="24" ry="34" transform="rotate(-15 160 140)" fill="#BA621C" stroke="#7A3E11" stroke-width="4"/>
-  <ellipse cx="160" cy="140" rx="14" ry="20" transform="rotate(-15 160 140)" fill="#FAD2B0"/>
-  <ellipse cx="230" cy="135" rx="22" ry="32" transform="rotate(15 230 135)" fill="#BA621C" stroke="#7A3E11" stroke-width="4"/>
-  <ellipse cx="230" cy="135" rx="12" ry="18" transform="rotate(15 230 135)" fill="#FAD2B0"/>
-
-  <!-- Chipmunk Head -->
-  <ellipse cx="195" cy="205" rx="72" ry="65" fill="url(#squirrelGrad)" stroke="#7A3E11" stroke-width="5"/>
-  <!-- Cheeks -->
-  <ellipse cx="145" cy="225" rx="34" ry="32" fill="#FDF0DF"/>
-  <ellipse cx="245" cy="225" rx="34" ry="32" fill="#FDF0DF"/>
-  <ellipse cx="195" cy="240" rx="38" ry="26" fill="#FFF8EE"/>
-
-  <!-- Stripes on Forehead -->
-  <path d="M195 145 L195 190" stroke="#4A2609" stroke-width="7" stroke-linecap="round"/>
-  <path d="M178 152 L180 185" stroke="#4A2609" stroke-width="4.5" stroke-linecap="round"/>
-  <path d="M212 152 L210 185" stroke="#4A2609" stroke-width="4.5" stroke-linecap="round"/>
-
-  <!-- Happy Eyes (curved smiles) -->
-  <path d="M155 198 Q170 185 185 198" stroke="#3A1E06" stroke-width="6" stroke-linecap="round" fill="none"/>
-  <path d="M205 198 Q220 185 235 198" stroke="#3A1E06" stroke-width="6" stroke-linecap="round" fill="none"/>
-  <!-- Rosy Cheeks -->
-  <circle cx="142" cy="216" r="14" fill="#FF8FAB" opacity="0.8"/>
-  <circle cx="248" cy="216" r="14" fill="#FF8FAB" opacity="0.8"/>
-
-  <!-- Nose & Smiling Mouth -->
-  <ellipse cx="195" cy="214" rx="6" ry="4.5" fill="#3A1E06"/>
-  <path d="M187 222 Q195 230 203 222" stroke="#3A1E06" stroke-width="3.5" fill="none"/>
-  <path d="M189 224 Q195 238 201 224" fill="#E63946"/>
-
-  <!-- Right: Fluffy Smiling Panda Bear (貓熊) -->
-  <!-- Panda Ears -->
-  <circle cx="310" cy="115" r="28" fill="#2B2D42" stroke="#1D1E2C" stroke-width="4"/>
-  <circle cx="430" cy="130" r="28" fill="#2B2D42" stroke="#1D1E2C" stroke-width="4"/>
-
-  <!-- Panda Head -->
-  <ellipse cx="370" cy="205" rx="76" ry="70" fill="#FFFFFF" stroke="#2B2D42" stroke-width="5"/>
-
-  <!-- Panda Eye Patches (Angled dark ovals) -->
-  <ellipse cx="330" cy="200" rx="22" ry="28" transform="rotate(20 330 200)" fill="#2B2D42"/>
-  <ellipse cx="410" cy="205" rx="22" ry="28" transform="rotate(-20 410 205)" fill="#2B2D42"/>
-  <!-- Panda Happy Eyes inside patches -->
-  <path d="M320 198 Q330 190 342 198" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" fill="none"/>
-  <path d="M398 203 Q410 195 422 203" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" fill="none"/>
-  <!-- Panda Rosy Cheeks -->
-  <circle cx="310" cy="226" r="15" fill="#FF8FAB" opacity="0.75"/>
-  <circle cx="430" cy="230" r="15" fill="#FF8FAB" opacity="0.75"/>
-
-  <!-- Panda Nose & Open Happy Mouth -->
-  <ellipse cx="370" cy="218" rx="8" ry="6" fill="#2B2D42"/>
-  <path d="M360 227 Q370 234 380 227" stroke="#2B2D42" stroke-width="3.5" fill="none"/>
-  <path d="M362 230 Q370 246 378 230 Z" fill="#E63946"/>
-
-  <!-- Center-Bottom: The Desktop Spiral Calendar ("DAILY 🐾 CALENDAR") -->
-  <!-- Calendar Backing Stand -->
-  <path d="M125 455 L385 455 L395 465 L115 465 Z" fill="#2B4C6F"/>
-  <!-- Calendar Page Body -->
-  <rect x="120" y="245" width="272" height="215" rx="16" fill="#FFFFFF" stroke="#1D3557" stroke-width="5" filter="url(#softShadow)"/>
-
-  <!-- Calendar Header Bar -->
-  <path d="M123 248 Q123 248 389 248 L389 295 L123 295 Z" fill="#FAF3E0"/>
-  <line x1="120" y1="295" x2="392" y2="295" stroke="#1D3557" stroke-width="4"/>
-
-  <!-- "DAILY 🐾 CALENDAR" Text -->
-  <text x="180" y="282" font-family="'M PLUS Rounded 1c', sans-serif" font-weight="900" font-size="18" fill="#582F0E" text-anchor="middle" letter-spacing="1">DAILY</text>
-  <!-- Paw Print in center -->
-  <ellipse cx="256" cy="278" rx="6" ry="5" fill="#7F5539"/>
-  <circle cx="249" cy="269" r="2.5" fill="#7F5539"/>
-  <circle cx="254" cy="266" r="2.5" fill="#7F5539"/>
-  <circle cx="259" cy="266" r="2.5" fill="#7F5539"/>
-  <circle cx="264" cy="269" r="2.5" fill="#7F5539"/>
-  <text x="330" y="282" font-family="'M PLUS Rounded 1c', sans-serif" font-weight="900" font-size="18" fill="#582F0E" text-anchor="middle" letter-spacing="1">CALENDAR</text>
-
-  <!-- Calendar Spiral Rings at Top -->
-  <!-- 7 Spiral Rings -->
-  <g fill="none" stroke="#457B9D" stroke-width="5" stroke-linecap="round">
-    <path d="M150 236 C150 224 162 224 162 250"/>
-    <path d="M185 236 C185 224 197 224 197 250"/>
-    <path d="M220 236 C220 224 232 224 232 250"/>
-    <path d="M255 236 C255 224 267 224 267 250"/>
-    <path d="M290 236 C290 224 302 224 302 250"/>
-    <path d="M325 236 C325 224 337 224 337 250"/>
-    <path d="M360 236 C360 224 372 224 372 250"/>
+  <!-- ========================================== -->
+  <!-- 2. LEFT: FLUFFY TAIL OF CHIPMUNK           -->
+  <!-- ========================================== -->
+  <!-- Tail Back Outer Arc -->
+  <g filter="url(#cardShadow)">
+    <path d="M 230 740 C 90 710 30 540 100 420 C 150 330 250 340 270 420 C 290 490 220 620 280 710 Z" 
+          fill="url(#chipmunkFur)" 
+          stroke="#2C1607" 
+          stroke-width="11" 
+          stroke-linejoin="round"/>
+    
+    <!-- Tail Inner Dark Stripes & Fluff -->
+    <path d="M 120 440 C 160 380 230 400 240 460 C 250 540 180 620 210 700" 
+          stroke="#451F06" 
+          stroke-width="20" 
+          stroke-linecap="round" 
+          fill="none"/>
+    <path d="M 80 470 C 110 520 120 610 170 680" 
+          stroke="#FEE6CD" 
+          stroke-width="12" 
+          stroke-linecap="round" 
+          fill="none" 
+          opacity="0.7"/>
   </g>
 
-  <!-- Calendar Grid Lines (Columns & Rows) -->
-  <g stroke="#E0C9B6" stroke-width="2">
-    <!-- Header Days Bar row -->
-    <rect x="135" y="302" width="242" height="24" fill="#F8BBD0" opacity="0.4"/>
-    <!-- Vertical Grid lines -->
-    <line x1="170" y1="302" x2="170" y2="445"/>
-    <line x1="205" y1="302" x2="205" y2="445"/>
-    <line x1="240" y1="302" x2="240" y2="445"/>
-    <line x1="275" y1="302" x2="275" y2="445"/>
-    <line x1="310" y1="302" x2="310" y2="445"/>
-    <line x1="345" y1="302" x2="345" y2="445"/>
-    <!-- Horizontal Grid lines -->
-    <line x1="135" y1="326" x2="377" y2="326"/>
-    <line x1="135" y1="356" x2="377" y2="356"/>
-    <line x1="135" y1="386" x2="377" y2="386"/>
-    <line x1="135" y1="416" x2="377" y2="416"/>
-    <line x1="135" y1="445" x2="377" y2="445"/>
+  <!-- ========================================== -->
+  <!-- 3. CHIPMUNK (花栗鼠) HEAD & EARS & FACE     -->
+  <!-- ========================================== -->
+  <!-- Chipmunk Left Ear -->
+  <ellipse cx="370" cy="225" rx="46" ry="68" transform="rotate(-18 370 225)" 
+           fill="#C76F1D" stroke="#2C1607" stroke-width="10"/>
+  <ellipse cx="370" cy="225" rx="26" ry="44" transform="rotate(-18 370 225)" 
+           fill="#F9BFB4"/>
+
+  <!-- Chipmunk Right Ear (snuggled towards panda) -->
+  <ellipse cx="490" cy="220" rx="42" ry="64" transform="rotate(16 490 220)" 
+           fill="#C76F1D" stroke="#2C1607" stroke-width="10"/>
+  <ellipse cx="490" cy="220" rx="24" ry="40" transform="rotate(16 490 220)" 
+           fill="#F9BFB4"/>
+
+  <!-- Chipmunk Chubby Head Base -->
+  <path d="M 270 420 C 220 370 250 250 380 240 C 470 230 530 280 545 350 C 560 410 540 480 490 510 C 420 530 310 510 270 420 Z" 
+        fill="url(#chipmunkFur)" 
+        stroke="#2C1607" 
+        stroke-width="11"/>
+
+  <!-- Cheeks Cream Fluff (Chubby Cute Cheeks) -->
+  <ellipse cx="295" cy="425" rx="72" ry="68" fill="#FFF3E2" stroke="#2C1607" stroke-width="9"/>
+  <ellipse cx="495" cy="425" rx="66" ry="64" fill="#FFF3E2" stroke="#2C1607" stroke-width="9"/>
+  <!-- Chin / Muzzle Cream Fur -->
+  <ellipse cx="395" cy="445" rx="78" ry="58" fill="#FFF3E2"/>
+
+  <!-- 3 Dark Brown Forehead Stripes -->
+  <!-- Center stripe -->
+  <path d="M 405 242 L 405 350" stroke="#3D1D06" stroke-width="17" stroke-linecap="round"/>
+  <!-- Left diagonal stripe -->
+  <path d="M 360 258 C 362 290 370 325 380 345" stroke="#3D1D06" stroke-width="12" stroke-linecap="round"/>
+  <!-- Right diagonal stripe -->
+  <path d="M 450 258 C 448 290 440 325 430 345" stroke="#3D1D06" stroke-width="12" stroke-linecap="round"/>
+
+  <!-- Chipmunk Happy Closed Smiling Eyes (^^) -->
+  <path d="M 320 375 C 335 350 365 350 380 375" 
+        stroke="#2A1606" stroke-width="13" stroke-linecap="round" fill="none"/>
+  <path d="M 425 375 C 440 350 470 350 485 375" 
+        stroke="#2A1606" stroke-width="13" stroke-linecap="round" fill="none"/>
+
+  <!-- Chipmunk Rosy Cheeks (Pink Blush) -->
+  <ellipse cx="285" cy="410" rx="30" ry="24" fill="#FF758F" opacity="0.82"/>
+  <ellipse cx="495" cy="410" rx="30" ry="24" fill="#FF758F" opacity="0.82"/>
+
+  <!-- Chipmunk Tiny Nose -->
+  <ellipse cx="402" cy="396" rx="12" ry="9" fill="#3D1D06"/>
+
+  <!-- Chipmunk Open Smiling Mouth & Tongue -->
+  <path d="M 384 414 Q 402 428 420 414" stroke="#2A1606" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <path d="M 386 418 Q 402 452 418 418 Z" fill="#D9384E" stroke="#2A1606" stroke-width="6"/>
+  <path d="M 390 430 Q 402 448 414 430 Q 402 422 390 430 Z" fill="#FF8FA3"/>
+
+
+  <!-- ========================================== -->
+  <!-- 4. PANDA (貓熊) HEAD, EARS, EYE PATCHES    -->
+  <!-- ========================================== -->
+  <!-- Panda Left Ear -->
+  <circle cx="675" cy="195" r="62" fill="#202127" stroke="#16171B" stroke-width="9"/>
+  <circle cx="682" cy="190" r="46" fill="#2C2D35"/>
+
+  <!-- Panda Right Ear -->
+  <circle cx="875" cy="285" r="62" fill="#202127" stroke="#16171B" stroke-width="9"/>
+  <circle cx="870" cy="280" r="46" fill="#2C2D35"/>
+
+  <!-- Panda Head (Plush White Face) -->
+  <ellipse cx="735" cy="385" rx="170" ry="160" fill="#FFFFFF" stroke="#202127" stroke-width="11"/>
+
+  <!-- Panda Black Eye Patches (Angled Ovals) -->
+  <ellipse cx="660" cy="365" rx="46" ry="60" transform="rotate(22 660 365)" fill="#202127"/>
+  <ellipse cx="805" cy="390" rx="46" ry="60" transform="rotate(-20 805 390)" fill="#202127"/>
+
+  <!-- Panda White Smiling Happy Eyes (^^ inside patches) -->
+  <path d="M 640 365 C 650 345 675 345 685 365" 
+        stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" fill="none"/>
+  <path d="M 785 390 C 795 370 820 370 830 390" 
+        stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" fill="none"/>
+
+  <!-- Panda Rosy Cheeks (Pink Blush on White Fur) -->
+  <circle cx="620" cy="425" r="34" fill="#FF758F" opacity="0.82"/>
+  <circle cx="845" cy="445" r="34" fill="#FF758F" opacity="0.82"/>
+
+  <!-- Panda Cute Nose -->
+  <ellipse cx="732" cy="406" rx="16" ry="12" fill="#1A1B22"/>
+
+  <!-- Panda Open Smiling Mouth & Tongue -->
+  <path d="M 714 424 Q 732 436 750 424" stroke="#202127" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <path d="M 716 426 Q 732 464 748 426 Z" fill="#D9384E" stroke="#202127" stroke-width="6"/>
+  <path d="M 720 440 Q 732 460 744 440 Q 732 432 720 440 Z" fill="#FF8FA3"/>
+
+  <!-- Panda Black Body / Shoulder Peeking Behind Calendar -->
+  <path d="M 830 480 C 880 520 920 620 920 730" stroke="#202127" stroke-width="48" stroke-linecap="round" fill="none"/>
+
+
+  <!-- ========================================== -->
+  <!-- 5. DESKTOP TENT CALENDAR (立體桌上型月曆)   -->
+  <!-- ========================================== -->
+  <!-- Easel Triangular Stand Behind Calendar -->
+  <path d="M 235 885 L 815 885 L 850 895 L 210 895 Z" fill="#1C334E"/>
+  <polygon points="790,560 840,885 780,885" fill="#244265"/>
+
+  <!-- Calendar Page Outer Card (Slanted 3D Perspective) -->
+  <g filter="url(#calendarShadow)">
+    <polygon points="230,470 805,525 785,910 215,865" 
+             fill="#FFFFFF" 
+             stroke="#1D334D" 
+             stroke-width="11" 
+             stroke-linejoin="round"/>
   </g>
 
-  <!-- Pink Highlighted Holiday dates matching IMG_4566 (Date 7 & Date 21) -->
-  <rect x="136" y="327" width="33" height="28" fill="#F8BBD0" rx="3"/>
-  <text x="152" y="347" font-family="sans-serif" font-weight="bold" font-size="14" fill="#C2185B" text-anchor="middle">7</text>
+  <!-- Calendar Top Title Banner -->
+  <polygon points="232,473 803,528 798,590 229,535" 
+           fill="#FAF2E2" 
+           stroke="#1D334D" 
+           stroke-width="7"/>
+  <line x1="229" y1="535" x2="798" y2="590" stroke="#1D334D" stroke-width="8"/>
 
-  <rect x="136" y="387" width="33" height="28" fill="#F8BBD0" rx="3"/>
-  <text x="152" y="407" font-family="sans-serif" font-weight="bold" font-size="14" fill="#C2185B" text-anchor="middle">21</text>
+  <!-- "DAILY 🐾 CALENDAR" Text on Banner (tilted to match calendar slope) -->
+  <g transform="rotate(5.5 510 535)">
+    <!-- "DAILY" -->
+    <text x="355" y="528" 
+          font-family="'M PLUS Rounded 1c', 'Arial Rounded MT Bold', sans-serif" 
+          font-weight="900" 
+          font-size="36" 
+          fill="#4D270B" 
+          text-anchor="middle" 
+          letter-spacing="2">DAILY</text>
 
-  <!-- Sweet Little Pink Heart at the bottom right corner (like IMG_4566) -->
-  <path d="M328 426 C328 421 334 418 338 422 C342 418 348 421 348 426 C348 433 338 439 338 439 C338 439 328 433 328 426 Z" fill="#E63946"/>
+    <!-- Center Paw Print (1 Pad + 4 Toes) -->
+    <g fill="#6B3F1B">
+      <ellipse cx="505" cy="522" rx="14" ry="11"/>
+      <circle cx="488" cy="502" r="5.5"/>
+      <circle cx="499" cy="494" r="5.5"/>
+      <circle cx="511" cy="494" r="5.5"/>
+      <circle cx="522" cy="502" r="5.5"/>
+    </g>
 
-  <!-- Hands/Paws holding the calendar on sides -->
-  <!-- Chipmunk Left Paw -->
-  <ellipse cx="145" cy="256" rx="14" ry="12" fill="#BA621C" stroke="#7A3E11" stroke-width="3"/>
-  <ellipse cx="140" cy="270" rx="14" ry="12" fill="#BA621C" stroke="#7A3E11" stroke-width="3"/>
-  <!-- Panda Right Paw -->
-  <circle cx="375" cy="256" r="14" fill="#2B2D42" stroke="#1D1E2C" stroke-width="3"/>
-  <circle cx="380" cy="270" r="14" fill="#2B2D42" stroke="#1D1E2C" stroke-width="3"/>
+    <!-- "CALENDAR" -->
+    <text x="655" y="528" 
+          font-family="'M PLUS Rounded 1c', 'Arial Rounded MT Bold', sans-serif" 
+          font-weight="900" 
+          font-size="36" 
+          fill="#4D270B" 
+          text-anchor="middle" 
+          letter-spacing="2">CALENDAR</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 6. CALENDAR SPIRAL WIRE RINGS (銀色金屬雙線圈)-->
+  <!-- ========================================== -->
+  <!-- 10 Metallic Double-Ring Loops across top -->
+  <!-- Punch holes & rings -->
+  <g stroke="#1D334D" stroke-width="7" stroke-linecap="round" fill="none">
+    <!-- Ring 1 -->
+    <path d="M 285 450 C 285 425 305 425 305 485" stroke="url(#ringGrad)" stroke-width="11"/>
+    <!-- Ring 2 -->
+    <path d="M 335 455 C 335 430 355 430 355 490" stroke="url(#ringGrad)" stroke-width="11"/>
+    <!-- Ring 3 -->
+    <path d="M 385 460 C 385 435 405 435 405 495" stroke="url(#ringGrad)" stroke-width="11"/>
+    <!-- Ring 4 -->
+    <path d="M 435 465 C 435 440 455 440 455 500" stroke="url(#ringGrad)" stroke-width="11"/>
+    <!-- Ring 5 -->
+    <path d="M 485 470 C 485 445 505 445 505 505" stroke="url(#ringGrad)" stroke-width="11"/>
+    <!-- Ring 6 -->
+    <path d="M 535 475 C 535 450 555 450 555 510" stroke="url(#ringGrad)" stroke-width="11"/>
+    <!-- Ring 7 -->
+    <path d="M 585 480 C 585 455 605 455 605 515" stroke="url(#ringGrad)" stroke-width="11"/>
+    <!-- Ring 8 -->
+    <path d="M 635 485 C 635 460 655 460 655 520" stroke="url(#ringGrad)" stroke-width="11"/>
+    <!-- Ring 9 -->
+    <path d="M 685 490 C 685 465 705 465 705 525" stroke="url(#ringGrad)" stroke-width="11"/>
+    <!-- Ring 10 -->
+    <path d="M 735 495 C 735 470 755 470 755 530" stroke="url(#ringGrad)" stroke-width="11"/>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 7. CALENDAR GRID & HOLIDAY CELL HIGHLIGHTS -->
+  <!-- ========================================== -->
+  <!-- Pink Weekday Header Row -->
+  <polygon points="252,550 782,600 778,635 248,585" fill="#F8C6BC" opacity="0.9"/>
+
+  <!-- Grid Cells Inner Lines -->
+  <g stroke="#DEC8B8" stroke-width="4.5" opacity="0.85">
+    <!-- Horizontal Row Dividers -->
+    <line x1="245" y1="635" x2="774" y2="685"/>
+    <line x1="240" y1="685" x2="768" y2="735"/>
+    <line x1="234" y1="735" x2="762" y2="785"/>
+    <line x1="228" y1="785" x2="756" y2="835"/>
+    <line x1="222" y1="835" x2="750" y2="885"/>
+
+    <!-- Vertical Column Dividers -->
+    <line x1="324" y1="557" x2="295" y2="840"/>
+    <line x1="398" y1="564" x2="370" y2="847"/>
+    <line x1="472" y1="571" x2="445" y2="854"/>
+    <line x1="546" y1="578" x2="520" y2="861"/>
+    <line x1="620" y1="585" x2="595" y2="868"/>
+    <line x1="694" y1="592" x2="670" y2="875"/>
+  </g>
+
+  <!-- Cell "7": Pink Highlighted Holiday with Red "7" (Exactly like IMG_4566) -->
+  <polygon points="245,635 321,642 316,689 240,682" fill="#F5A4A7"/>
+  <text x="281" y="670" 
+        font-family="'M PLUS Rounded 1c', sans-serif" 
+        font-weight="900" 
+        font-size="28" 
+        fill="#C2185B" 
+        text-anchor="middle">7</text>
+
+  <!-- Cell "21": Pink Highlighted Holiday with Red "21" (Exactly like IMG_4566) -->
+  <polygon points="234,735 308,742 301,791 228,784" fill="#F5A4A7"/>
+  <text x="268" y="771" 
+        font-family="'M PLUS Rounded 1c', sans-serif" 
+        font-weight="900" 
+        font-size="28" 
+        fill="#C2185B" 
+        text-anchor="middle">21</text>
+
+  <!-- Bottom Row Heart Icon: Cute Little Red Heart (Exactly like IMG_4566) -->
+  <g transform="translate(620, 808) rotate(5) scale(1.35)">
+    <path d="M 16 7 C 16 2 24 -1 29 4 C 34 -1 42 2 42 7 C 42 16 29 24 29 24 C 29 24 16 16 16 7 Z" 
+          fill="#E63946"/>
+  </g>
+
+
+  <!-- ========================================== -->
+  <!-- 8. PAWS RESTING ON & HOLDING THE CALENDAR  -->
+  <!-- ========================================== -->
+  <!-- Chipmunk Paws on Top Calendar Edge -->
+  <!-- Left paw -->
+  <g filter="url(#calendarShadow)">
+    <ellipse cx="295" cy="485" rx="26" ry="20" fill="#DE8837" stroke="#2C1607" stroke-width="8"/>
+    <path d="M 285 475 L 285 495" stroke="#2C1607" stroke-width="5" stroke-linecap="round"/>
+    <path d="M 305 475 L 305 495" stroke="#2C1607" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Chipmunk Right paw -->
+  <g filter="url(#calendarShadow)">
+    <ellipse cx="460" cy="435" rx="26" ry="20" transform="rotate(20 460 435)" fill="#DE8837" stroke="#2C1607" stroke-width="8"/>
+    <path d="M 452 425 L 458 445" stroke="#2C1607" stroke-width="5" stroke-linecap="round"/>
+    <path d="M 468 425 L 474 445" stroke="#2C1607" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Panda Black Paws on Right of Calendar -->
+  <g filter="url(#calendarShadow)">
+    <!-- Top grasping paw -->
+    <ellipse cx="675" cy="485" rx="28" ry="22" fill="#202127" stroke="#16171B" stroke-width="7"/>
+    <!-- Side grasping paw -->
+    <ellipse cx="780" cy="510" rx="30" ry="24" transform="rotate(-15 780 510)" fill="#202127" stroke="#16171B" stroke-width="8"/>
+  </g>
 </svg>

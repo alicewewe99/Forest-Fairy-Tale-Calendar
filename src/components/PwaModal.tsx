@@ -94,13 +94,21 @@ export const PwaModal: React.FC<PwaModalProps> = ({
       <div className="bg-white rounded-3xl max-w-md w-full p-4 sm:p-5 shadow-2xl border-2 border-[#E76F51] text-[#2D241E] text-center max-h-[92vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-gray-200 pb-2.5 mb-3">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-[#FAF0CA] flex items-center justify-center text-lg">
-              📱
+          <div className="flex items-center gap-2.5 text-left">
+            <img 
+              src="/apple-touch-icon.png" 
+              alt="桌面圖示預覽" 
+              className="w-10 h-10 rounded-2xl shadow-sm border border-[#A2D2FF] object-cover flex-shrink-0"
+              referrerPolicy="no-referrer"
+            />
+            <div>
+              <h3 className="font-extrabold text-base sm:text-lg text-[#8B5A2B] leading-tight">
+                安裝至手機與電腦桌面
+              </h3>
+              <p className="text-[11px] text-[#9C6644] leading-tight">
+                花栗鼠與貓熊童話月曆 App 圖示
+              </p>
             </div>
-            <h3 className="font-extrabold text-base sm:text-lg text-[#8B5A2B]">
-              下載至手機桌面 (PWA App)
-            </h3>
           </div>
           <button
             onClick={onClose}

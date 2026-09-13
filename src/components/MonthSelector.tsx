@@ -86,6 +86,25 @@ export const MonthSelector: React.FC<MonthSelectorProps> = ({
         </button>
       </div>
 
+      {/* Quick year pills for 2026, 2027, 2028 per user reference */}
+      <div className="flex items-center justify-center gap-1.5 mt-2 pt-2 border-t border-[#E9DAC1]/70 flex-wrap">
+        <span className="text-[11px] text-[#7F5539] font-bold">快速切換：</span>
+        {[2026, 2027, 2028].map((yr) => (
+          <button
+            key={yr}
+            id={`quickYearBtn-${yr}`}
+            onClick={() => onYearChange(yr)}
+            className={`text-xs px-2.5 py-1 rounded-lg font-bold transition shadow-2xs cursor-pointer ${
+              currentYear === yr
+                ? 'bg-[#8B5A2B] text-white shadow-xs scale-105'
+                : 'bg-[#FAF0CA] text-[#6F441F] hover:bg-[#F4D35E] border border-[#E0A96D]'
+            }`}
+          >
+            {yr}年 (民國{yr - 1911})
+          </button>
+        ))}
+      </div>
+
       <div className="text-center text-[11px] sm:text-xs text-[#7F5539] font-medium mt-1.5 flex items-center justify-center gap-2">
         <span>行政院人事行政總處最新標準</span>
         <span>•</span>

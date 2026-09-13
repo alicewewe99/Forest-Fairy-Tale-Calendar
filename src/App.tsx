@@ -9,7 +9,7 @@ import { GithubModal } from './components/GithubModal';
 import { PwaModal } from './components/PwaModal';
 import { SyncModal } from './components/SyncModal';
 import { Toast } from './components/Toast';
-import { getLunarText } from './data/calendarData';
+import { getLunarText, getFullLunarInfo } from './data/calendarData';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -167,9 +167,9 @@ export default function App() {
     const d = now.getDate();
     const weekDays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
     const w = weekDays[now.getDay()];
-    const lunar = getLunarText(y, m, d);
+    const lunarInfo = getFullLunarInfo(y, m, d);
 
-    const str = `${y}年${m + 1}月${d}日 農曆${lunar} ${w}`;
+    const str = `${y}年${m + 1}月${d}日 農曆${lunarInfo.monthName}${lunarInfo.dayName}${lunarInfo.jieQi ? ` (${lunarInfo.jieQi})` : ''} ${w}`;
     navigator.clipboard.writeText(str);
     showToast(`已成功複製今日：${str}`);
   };
