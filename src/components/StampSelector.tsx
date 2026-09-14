@@ -9,6 +9,8 @@ export interface StampItem {
 
 export const AVAILABLE_STAMPS: StampItem[] = [
   { id: '⭐', emoji: '⭐', name: '星星' },
+  { id: '💼', emoji: '💼', name: '公事' },
+  { id: '💉', emoji: '💉', name: '看診' },
   { id: '🎂', emoji: '🎂', name: '蛋糕' },
   { id: '☀️', emoji: '☀️', name: '太陽' },
   { id: '🍖', emoji: '🍖', name: '烤肉' },
@@ -36,15 +38,44 @@ export const StampSelector: React.FC<StampSelectorProps> = ({
     <div className="bg-[#FAF0CA] border border-[#E0A96D] rounded-2xl p-2 sm:p-2.5 shadow-inner">
       <div className="flex items-center justify-between gap-2 mb-1.5 px-1">
         <div className="text-xs sm:text-sm font-extrabold text-[#6F441F] flex items-center gap-1.5">
-          <Sparkles className="w-4 h-4 text-[#E76F51]" />
-          <span>特殊標記印章（點選印章後，直接點擊月曆日期蓋印，無須輸入標題）</span>
+          {selectedStamp === 'NOTE' ? (
+            <>
+              <span className="text-base leading-none">📝</span>
+              <span className="text-[#C2185B]">已進入筆記模式：點擊月曆任意日期即可新增或編輯筆記</span>
+            </>
+          ) : selectedStamp === 'CLEAR' ? (
+            <>
+              <Eraser className="w-4 h-4 text-[#E76F51]" />
+              <span className="text-[#E76F51]">已進入橡皮擦模式：點擊月曆日期即可擦除該日所有印章</span>
+            </>
+          ) : (
+            <>
+              <Sparkles className="w-4 h-4 text-[#E76F51]" />
+              <span>特殊標記印章（點選印章後直接點擊月曆日期蓋印，亦可切換「📝 寫筆記」）</span>
+            </>
+          )}
         </div>
         <div className="text-[11px] text-[#8C5E35] hidden sm:block font-medium">
-          可重複蓋印或切換橡皮擦清除
+          可蓋印 💼公事、💉看診、📝筆記等多種標記
         </div>
       </div>
 
       <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar" id="stampSelectorList">
+        {/* Date Note Button */}
+        <button
+          id="stampBtn-NOTE"
+          onClick={() => onSelectStamp('NOTE')}
+          className={`min-h-[36px] px-3 py-1 rounded-xl text-xs sm:text-sm font-extrabold shadow-xs transition active:scale-90 flex items-center gap-1.5 whitespace-nowrap cursor-pointer flex-shrink-0 ${
+            selectedStamp === 'NOTE'
+              ? 'bg-[#E76F51] border-2 border-[#B23B1E] ring-2 ring-[#E76F51]/40 text-white'
+              : 'bg-[#FFF3CD] border border-[#FFEBAA] text-[#856404] hover:bg-[#FFE8A1]'
+          }`}
+          title="切換筆記模式，點擊月曆日期即可撰寫/查看備忘筆記"
+        >
+          <span className="text-base leading-none">📝</span>
+          <span>寫筆記</span>
+        </button>
+
         {AVAILABLE_STAMPS.map((s) => {
           const isActive = selectedStamp === s.id;
           return (

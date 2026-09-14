@@ -4,6 +4,8 @@ import { TodayBar } from './components/TodayBar';
 import { MonthSelector } from './components/MonthSelector';
 import { StampSelector } from './components/StampSelector';
 import { CalendarGrid } from './components/CalendarGrid';
+import { MonthlyNotesList } from './components/MonthlyNotesList';
+import { NoteModal } from './components/NoteModal';
 import { OracleSection } from './components/OracleSection';
 import { GithubModal } from './components/GithubModal';
 import { PwaModal } from './components/PwaModal';
@@ -21,6 +23,8 @@ export default function App() {
   const [currentMonth, setCurrentMonth] = useState<number>(0);
   const [selectedStamp, setSelectedStamp] = useState<string>("⭐");
   const [customStamps, setCustomStamps] = useState<Record<string, string[]>>({});
+  const [customNotes, setCustomNotes] = useState<Record<string, string>>({});
+  const [noteModalDate, setNoteModalDate] = useState<string | null>(null);
 
   // Modals
   const [isGithubOpen, setIsGithubOpen] = useState(false);
@@ -43,11 +47,20 @@ export default function App() {
 
   // Initial load: "打開即是當天日期的月份"
   useEffect(() => {
-    // 1. Load stamps from localStorage
+    // 1. Load stamps & notes from localStorage
     try {
-      const stored = localStorage.getItem("squirrel_cal_stamps");
-      if (stored) {
-        setCustomStamps(JSON.parse(stored));
+      const storedStamps = localStorage.getItem("squirrel_cal_stamps");
+      if (storedStamps) {
+        setCustomStamps(JSON.parse(storedStamps));
+      }
+    } catch {
+      // ignore
+    }
+
+    try {
+      const storedNotes = localStorage.getItem("squirrel_cal_notes");
+      if (storedNotes) {
+        setCustomNotes(JSON.parse(storedNotes));
       }
     } catch {
       // ignore
@@ -87,8 +100,23 @@ export default function App() {
     }
   };
 
-  // Handle cell click (stamp toggle or clear)
+  // Save notes to localStorage
+  const saveNotes = (newNotes: Record<string, string>) => {
+    setCustomNotes(newNotes);
+    try {
+      localStorage.setItem("squirrel_cal_notes", JSON.stringify(newNotes));
+    } catch {
+      // storage quota or private browsing
+    }
+  };
+
+  // Handle cell click (stamp toggle, clear, or open note if note mode)
   const handleCellClick = (dateKey: string) => {
+    if (selectedStamp === "NOTE") {
+      setNoteModalDate(dateKey);
+      return;
+    }
+
     const updated = { ...customStamps };
     const currentList = updated[dateKey] ? [...updated[dateKey]] : [];
 
@@ -118,6 +146,48 @@ export default function App() {
       updated[dateKey] = currentList;
       saveStamps(updated);
       showToast(`已標記 ${selectedStamp} 至 ${dateKey}`);
+    }
+  };
+
+  // Note actions
+  const handleOpenNote = (dateKey: string) => {
+    setNoteModalDate(dateKey);
+  };
+
+  const handleSaveNote = (dateKey: string, noteText: string) => {
+    const updated = { ...customNotes };
+    if (noteText.trim()) {
+      updated[dateKey] = noteText.trim();
+      showToast(`已儲存 ${dateKey} 筆記 📝`);
+    } else {
+      delete updated[dateKey];
+      showToast(`已清空 ${dateKey} 筆記`);
+    }
+    saveNotes(updated);
+  };
+
+  const handleDeleteNote = (dateKey: string) => {
+    const updated = { ...customNotes };
+    delete updated[dateKey];
+    saveNotes(updated);
+    showToast(`已刪除 ${dateKey} 筆記`);
+  };
+
+  const handleToggleStampForDate = (dateKey: string, stamp: string) => {
+    const updated = { ...customStamps };
+    const currentList = updated[dateKey] ? [...updated[dateKey]] : [];
+    if (currentList.includes(stamp)) {
+      const filtered = currentList.filter((s) => s !== stamp);
+      if (filtered.length > 0) updated[dateKey] = filtered;
+      else delete updated[dateKey];
+      saveStamps(updated);
+      showToast(`已取消 ${dateKey} 的 ${stamp} 印章`);
+    } else {
+      if (currentList.length >= 3) currentList.shift();
+      currentList.push(stamp);
+      updated[dateKey] = currentList;
+      saveStamps(updated);
+      showToast(`已為 ${dateKey} 蓋上 ${stamp} 印章`);
     }
   };
 
@@ -220,12 +290,24 @@ export default function App() {
           onSelectStamp={setSelectedStamp}
         />
 
-        {/* Calendar Grid (Strict fixed 42 cells size & pink holiday markers) */}
+        {/* Calendar Grid (Strict fixed 42 cells size & pink holiday markers & 📝 note icons) */}
         <CalendarGrid
           currentYear={currentYear}
           currentMonth={currentMonth}
           customStamps={customStamps}
+          customNotes={customNotes}
+          selectedStamp={selectedStamp}
           onCellClick={handleCellClick}
+          onOpenNote={handleOpenNote}
+        />
+
+        {/* Monthly Notes List (Collapsible with count badge & quick editing) */}
+        <MonthlyNotesList
+          currentYear={currentYear}
+          currentMonth={currentMonth}
+          customNotes={customNotes}
+          customStamps={customStamps}
+          onOpenNote={handleOpenNote}
         />
 
         {/* 7 Great Oracle Sanctuaries */}
@@ -259,8 +341,22 @@ export default function App() {
         isOpen={isSyncOpen}
         onClose={() => setIsSyncOpen(false)}
         customStamps={customStamps}
+        customNotes={customNotes}
         onImportStamps={saveStamps}
+        onImportNotes={saveNotes}
         onShowToast={showToast}
+      />
+
+      {/* Date Note Modal */}
+      <NoteModal
+        isOpen={noteModalDate !== null}
+        onClose={() => setNoteModalDate(null)}
+        dateKey={noteModalDate}
+        initialNote={noteModalDate ? customNotes[noteModalDate] || "" : ""}
+        onSaveNote={handleSaveNote}
+        onDeleteNote={handleDeleteNote}
+        stamps={noteModalDate ? customStamps[noteModalDate] || [] : []}
+        onToggleStamp={handleToggleStampForDate}
       />
 
       {/* Floating Toast Notification */}

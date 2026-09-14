@@ -6,7 +6,9 @@ interface SyncModalProps {
   isOpen: boolean;
   onClose: () => void;
   customStamps: Record<string, string[]>;
+  customNotes?: Record<string, string>;
   onImportStamps: (imported: Record<string, string[]>) => void;
+  onImportNotes?: (imported: Record<string, string>) => void;
   onShowToast: (msg: string) => void;
 }
 
@@ -14,7 +16,9 @@ export const SyncModal: React.FC<SyncModalProps> = ({
   isOpen,
   onClose,
   customStamps,
+  customNotes = {},
   onImportStamps,
+  onImportNotes,
   onShowToast,
 }) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -50,18 +54,35 @@ export const SyncModal: React.FC<SyncModalProps> = ({
       );
     });
 
-    // Export User Custom Stamped Events
-    (Object.entries(customStamps) as [string, string[]][]).forEach(([dateStr, stamps]) => {
-      if (!stamps || stamps.length === 0) return;
+    // Export User Custom Stamped Events & Notes
+    const allUserDates = new Set([
+      ...Object.keys(customStamps),
+      ...Object.keys(customNotes),
+    ]);
+
+    allUserDates.forEach((dateStr) => {
+      const stamps = customStamps[dateStr] || [];
+      const note = (customNotes[dateStr] || '').trim();
+      if (stamps.length === 0 && !note) return;
+
       const cleanDate = dateStr.replace(/-/g, "");
       const stampEmojis = stamps.join(" ");
+      const summaryPrefix = note ? "📝 " : "🐿️ ";
+      const summaryText = note
+        ? `${summaryPrefix}${stampEmojis ? `[${stampEmojis}] ` : ""}${note.slice(0, 20)}`
+        : `${summaryPrefix}特殊標記 [${stampEmojis}]`;
+
+      const descParts = [];
+      if (stampEmojis) descParts.push(`印章標記: ${stampEmojis}`);
+      if (note) descParts.push(`備忘筆記: ${note}`);
+
       icsContent.push(
         "BEGIN:VEVENT",
-        `UID:stamp-${cleanDate}-${Date.now()}@fairycalendar.app`,
+        `UID:note-${cleanDate}-${Date.now()}@fairycalendar.app`,
         `DTSTAMP:${cleanDate}T000000Z`,
         `DTSTART;VALUE=DATE:${cleanDate}`,
-        `SUMMARY:🐿️ 特殊標記 [${stampEmojis}]`,
-        `DESCRIPTION:童話月曆行程標記：${stampEmojis} (日期: ${dateStr})`,
+        `SUMMARY:${summaryText}`,
+        `DESCRIPTION:${descParts.join(" \\n ")} (日期: ${dateStr})`,
         "STATUS:CONFIRMED",
         "TRANSP:OPAQUE",
         "END:VEVENT"
@@ -79,16 +100,17 @@ export const SyncModal: React.FC<SyncModalProps> = ({
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    onShowToast("已匯出 iCalendar (.ics) 行事曆檔案！");
+    onShowToast("已匯出 iCalendar (.ics) 行事曆檔案（含國定假、印章與筆記）！");
   };
 
   // 2. Export JSON backup
   const handleExportJSON = () => {
     const data = {
       app: "squirrel-panda-fairy-calendar",
-      version: "2.0",
+      version: "2.1",
       exportTime: new Date().toISOString(),
       customStamps,
+      customNotes,
     };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
@@ -99,7 +121,7 @@ export const SyncModal: React.FC<SyncModalProps> = ({
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    onShowToast("已匯出個人標記備份 JSON 檔案！");
+    onShowToast("已匯出個人印章與筆記備份 JSON 檔案！");
   };
 
   // 3. Import JSON backup
@@ -112,9 +134,17 @@ export const SyncModal: React.FC<SyncModalProps> = ({
       try {
         const text = event.target?.result as string;
         const parsed = JSON.parse(text);
+        let importedCount = 0;
         if (parsed.customStamps && typeof parsed.customStamps === 'object') {
           onImportStamps(parsed.customStamps);
-          onShowToast("成功匯入個人行事曆標記！");
+          importedCount++;
+        }
+        if (parsed.customNotes && typeof parsed.customNotes === 'object' && onImportNotes) {
+          onImportNotes(parsed.customNotes);
+          importedCount++;
+        }
+        if (importedCount > 0) {
+          onShowToast("成功匯入個人行事曆標記與備忘筆記！");
           onClose();
         } else {
           onShowToast("檔案格式不符合，請確認為正確的童話月曆備份檔");

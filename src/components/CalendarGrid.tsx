@@ -5,14 +5,20 @@ interface CalendarGridProps {
   currentYear: number;
   currentMonth: number;
   customStamps: Record<string, string[]>;
+  customNotes?: Record<string, string>;
+  selectedStamp?: string;
   onCellClick: (dateKey: string) => void;
+  onOpenNote: (dateKey: string) => void;
 }
 
 export const CalendarGrid: React.FC<CalendarGridProps> = ({
   currentYear,
   currentMonth,
   customStamps,
+  customNotes = {},
+  selectedStamp = '⭐',
   onCellClick,
+  onOpenNote,
 }) => {
   const firstDay = new Date(currentYear, currentMonth, 1).getDay(); // 0 = Sun
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
@@ -59,6 +65,8 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
     const lunar = getLunarText(currentYear, currentMonth, d);
     const stamps = customStamps[dateKey] || [];
     const isToday = (dateKey === todayKey);
+    const noteText = customNotes[dateKey] || '';
+    const hasNote = Boolean(noteText.trim());
 
     // Explicit colors per requirement:
     // "休假日粉紅色底色和紅色字體明顯標註"
@@ -79,19 +87,43 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
       ? "ring-3 ring-[#F4A261] ring-offset-2 border-2 border-[#E76F51] shadow-md z-10 scale-[1.02]" 
       : "shadow-xs";
 
+    const handleCellClick = () => {
+      if (selectedStamp === 'NOTE') {
+        onOpenNote(dateKey);
+      } else {
+        onCellClick(dateKey);
+      }
+    };
+
     currentCells.push(
       <div
         key={dateKey}
         id={`calCell-${dateKey}`}
-        onClick={() => onCellClick(dateKey)}
-        className={`h-[76px] sm:h-[88px] rounded-xl p-1 sm:p-1.5 flex flex-col justify-between transition-all duration-150 cursor-pointer border ${bgClass} ${todayRing}`}
-        title={`${dateKey} 農曆：${lunar}${holiday ? ` • ${holiday.name}` : ''}`}
+        onClick={handleCellClick}
+        className={`group relative h-[76px] sm:h-[88px] rounded-xl p-1 sm:p-1.5 flex flex-col justify-between transition-all duration-150 cursor-pointer border ${bgClass} ${todayRing}`}
+        title={`${dateKey} 農曆：${lunar}${holiday ? ` • ${holiday.name}` : ''}${hasNote ? ` • 【筆記】${noteText}` : ''}`}
       >
         {/* Top: Day number + Badges */}
         <div className="w-full flex items-center justify-between leading-none pointer-events-none">
-          <span className={`text-xs sm:text-sm ${textNumClass}`}>
-            {d}
-          </span>
+          <div className="flex items-center gap-1">
+            <span className={`text-xs sm:text-sm ${textNumClass}`}>
+              {d}
+            </span>
+            {hasNote && (
+              <button
+                type="button"
+                id={`noteBadge-${dateKey}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onOpenNote(dateKey);
+                }}
+                className="pointer-events-auto text-xs leading-none hover:scale-130 transition-transform active:scale-95 cursor-pointer"
+                title={`📝 筆記：${noteText}`}
+              >
+                📝
+              </button>
+            )}
+          </div>
           <div className="flex items-center gap-0.5">
             {isToday && (
               <span className="text-[9px] px-1 py-0.5 rounded font-black bg-[#E76F51] text-white leading-none shadow-2xs">
@@ -150,12 +182,17 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
     );
   }
 
-  // Count total off days this month
+  // Count total off days and notes this month
   let totalOffDays = 0;
+  let totalNotesThisMonth = 0;
   for (let d = 1; d <= daysInMonth; d++) {
     const dayOfWeek = (firstDay + d - 1) % 7;
     const { isOff } = getHolidayInfo(currentYear, currentMonth, d, dayOfWeek);
     if (isOff) totalOffDays++;
+    const key = formatDateKey(currentYear, currentMonth, d);
+    if (customNotes[key] && customNotes[key].trim()) {
+      totalNotesThisMonth++;
+    }
   }
 
   return (
@@ -199,10 +236,21 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
             <span className="text-[9px] px-1 py-0.5 rounded font-black bg-[#C2185B] text-white leading-none">國定假</span>
             <span className="font-medium text-[#4A3525]">國定假日</span>
           </span>
+          <span className="inline-flex items-center gap-1.5 bg-[#FAF6F0] px-2 py-0.5 rounded-md border border-[#E9DAC1]">
+            <span className="text-xs">📝</span>
+            <span className="font-medium text-[#4A3525]">日期筆記</span>
+          </span>
         </div>
 
-        <div className="text-xs text-[#6F441F] font-bold bg-[#FAF0CA] px-2.5 py-1 rounded-lg border border-[#E0A96D]">
-          本月放假天數：<span className="text-[#C2185B] font-black text-sm">{totalOffDays}</span> 天
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="text-xs text-[#6F441F] font-bold bg-[#FAF0CA] px-2.5 py-1 rounded-lg border border-[#E0A96D]">
+            本月放假天數：<span className="text-[#C2185B] font-black text-sm">{totalOffDays}</span> 天
+          </div>
+          {totalNotesThisMonth > 0 && (
+            <div className="text-xs text-[#582F0E] font-bold bg-[#FFF3CD] px-2.5 py-1 rounded-lg border border-[#FFEBAA]">
+              筆記：<span className="text-[#856404] font-black text-sm">{totalNotesThisMonth}</span> 則 📝
+            </div>
+          )}
         </div>
       </div>
     </div>
