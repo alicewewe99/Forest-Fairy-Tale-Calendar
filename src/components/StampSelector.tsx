@@ -28,11 +28,15 @@ export const AVAILABLE_STAMPS: StampItem[] = [
 interface StampSelectorProps {
   selectedStamp: string;
   onSelectStamp: (stamp: string) => void;
+  onOpenNotesFolder?: () => void;
+  notesCount?: number;
 }
 
 export const StampSelector: React.FC<StampSelectorProps> = ({
   selectedStamp,
   onSelectStamp,
+  onOpenNotesFolder,
+  notesCount = 0,
 }) => {
   return (
     <div className="bg-[#FAF0CA] border border-[#E0A96D] rounded-2xl p-2 sm:p-2.5 shadow-inner">
@@ -75,6 +79,25 @@ export const StampSelector: React.FC<StampSelectorProps> = ({
           <span className="text-base leading-none">📝</span>
           <span>寫筆記</span>
         </button>
+
+        {/* Notes Folder Button */}
+        {onOpenNotesFolder && (
+          <button
+            id="stampBtn-FOLDER"
+            type="button"
+            onClick={onOpenNotesFolder}
+            className="min-h-[36px] px-3 py-1 rounded-xl text-xs sm:text-sm font-extrabold shadow-xs transition active:scale-90 flex items-center gap-1.5 whitespace-nowrap cursor-pointer flex-shrink-0 bg-white border-2 border-[#D4A373] text-[#582F0E] hover:bg-[#FAF0CA]"
+            title="開啟備忘筆記資料夾，統一瀏覽所有筆記"
+          >
+            <span className="text-base leading-none">📁</span>
+            <span>筆記資料夾</span>
+            {notesCount > 0 && (
+              <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-[#E76F51] text-white font-black leading-none ml-0.5">
+                {notesCount}
+              </span>
+            )}
+          </button>
+        )}
 
         {AVAILABLE_STAMPS.map((s) => {
           const isActive = selectedStamp === s.id;

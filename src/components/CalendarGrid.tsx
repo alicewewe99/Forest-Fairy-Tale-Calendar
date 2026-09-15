@@ -9,6 +9,7 @@ interface CalendarGridProps {
   selectedStamp?: string;
   onCellClick: (dateKey: string) => void;
   onOpenNote: (dateKey: string) => void;
+  onOpenNotesFolder?: () => void;
 }
 
 export const CalendarGrid: React.FC<CalendarGridProps> = ({
@@ -19,6 +20,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
   selectedStamp = '⭐',
   onCellClick,
   onOpenNote,
+  onOpenNotesFolder,
 }) => {
   const firstDay = new Date(currentYear, currentMonth, 1).getDay(); // 0 = Sun
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
@@ -236,10 +238,23 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
             <span className="text-[9px] px-1 py-0.5 rounded font-black bg-[#C2185B] text-white leading-none">國定假</span>
             <span className="font-medium text-[#4A3525]">國定假日</span>
           </span>
-          <span className="inline-flex items-center gap-1.5 bg-[#FAF6F0] px-2 py-0.5 rounded-md border border-[#E9DAC1]">
-            <span className="text-xs">📝</span>
-            <span className="font-medium text-[#4A3525]">日期筆記</span>
-          </span>
+          {onOpenNotesFolder ? (
+            <button
+              type="button"
+              id="legendOpenNotesFolderBtn"
+              onClick={onOpenNotesFolder}
+              className="inline-flex items-center gap-1.5 bg-[#FAF6F0] hover:bg-[#FAF0CA] px-2 py-0.5 rounded-md border border-[#E9DAC1] transition cursor-pointer"
+              title="開啟筆記資料夾"
+            >
+              <span className="text-xs">📁</span>
+              <span className="font-bold text-[#582F0E]">筆記資料夾</span>
+            </button>
+          ) : (
+            <span className="inline-flex items-center gap-1.5 bg-[#FAF6F0] px-2 py-0.5 rounded-md border border-[#E9DAC1]">
+              <span className="text-xs">📝</span>
+              <span className="font-medium text-[#4A3525]">日期筆記</span>
+            </span>
+          )}
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
@@ -247,9 +262,17 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
             本月放假天數：<span className="text-[#C2185B] font-black text-sm">{totalOffDays}</span> 天
           </div>
           {totalNotesThisMonth > 0 && (
-            <div className="text-xs text-[#582F0E] font-bold bg-[#FFF3CD] px-2.5 py-1 rounded-lg border border-[#FFEBAA]">
-              筆記：<span className="text-[#856404] font-black text-sm">{totalNotesThisMonth}</span> 則 📝
-            </div>
+            <button
+              type="button"
+              id="summaryOpenNotesFolderBtn"
+              onClick={onOpenNotesFolder}
+              className="text-xs text-[#582F0E] font-bold bg-[#FFF3CD] hover:bg-[#FFE8A1] px-2.5 py-1 rounded-lg border border-[#FFEBAA] transition cursor-pointer flex items-center gap-1"
+              title="點擊開啟筆記資料夾"
+            >
+              <span>📁 筆記：</span>
+              <span className="text-[#856404] font-black text-sm">{totalNotesThisMonth}</span>
+              <span>則</span>
+            </button>
           )}
         </div>
       </div>

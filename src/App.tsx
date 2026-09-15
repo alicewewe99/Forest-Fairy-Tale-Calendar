@@ -4,7 +4,7 @@ import { TodayBar } from './components/TodayBar';
 import { MonthSelector } from './components/MonthSelector';
 import { StampSelector } from './components/StampSelector';
 import { CalendarGrid } from './components/CalendarGrid';
-import { MonthlyNotesList } from './components/MonthlyNotesList';
+import { NotesFolderModal } from './components/NotesFolderModal';
 import { NoteModal } from './components/NoteModal';
 import { OracleSection } from './components/OracleSection';
 import { GithubModal } from './components/GithubModal';
@@ -25,6 +25,7 @@ export default function App() {
   const [customStamps, setCustomStamps] = useState<Record<string, string[]>>({});
   const [customNotes, setCustomNotes] = useState<Record<string, string>>({});
   const [noteModalDate, setNoteModalDate] = useState<string | null>(null);
+  const [isNotesFolderOpen, setIsNotesFolderOpen] = useState(false);
 
   // Modals
   const [isGithubOpen, setIsGithubOpen] = useState(false);
@@ -255,6 +256,18 @@ export default function App() {
     }
   };
 
+  // Count monthly and total notes
+  const currentMonthPrefix = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}`;
+  const notesCountThisMonth = (Object.entries(customNotes) as [string, string][]).filter(
+    ([k, v]) => k.startsWith(currentMonthPrefix) && typeof v === 'string' && v.trim().length > 0
+  ).length;
+  const totalNotesCount = (Object.values(customNotes) as string[]).filter(
+    (v) => typeof v === 'string' && v.trim().length > 0
+  ).length;
+
+  const today = new Date();
+  const todayKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF6F0] text-[#4A3525]">
       {/* Top Header */}
@@ -262,6 +275,8 @@ export default function App() {
         onOpenGithub={() => setIsGithubOpen(true)}
         onOpenPwa={() => setIsPwaOpen(true)}
         onOpenSync={() => setIsSyncOpen(true)}
+        onOpenNotesFolder={() => setIsNotesFolderOpen(true)}
+        notesCount={totalNotesCount}
         isInstallable={!!installPrompt}
         onInstallApp={handleInstallApp}
       />
@@ -288,6 +303,8 @@ export default function App() {
         <StampSelector
           selectedStamp={selectedStamp}
           onSelectStamp={setSelectedStamp}
+          onOpenNotesFolder={() => setIsNotesFolderOpen(true)}
+          notesCount={totalNotesCount}
         />
 
         {/* Calendar Grid (Strict fixed 42 cells size & pink holiday markers & 📝 note icons) */}
@@ -299,16 +316,44 @@ export default function App() {
           selectedStamp={selectedStamp}
           onCellClick={handleCellClick}
           onOpenNote={handleOpenNote}
+          onOpenNotesFolder={() => setIsNotesFolderOpen(true)}
         />
 
-        {/* Monthly Notes List (Collapsible with count badge & quick editing) */}
-        <MonthlyNotesList
-          currentYear={currentYear}
-          currentMonth={currentMonth}
-          customNotes={customNotes}
-          customStamps={customStamps}
-          onOpenNote={handleOpenNote}
-        />
+        {/* Notes Folder Link Bar (Notes unified in folder instead of expanded list) */}
+        <div className="bg-[#FFFDF9] border border-[#E9DAC1] hover:border-[#D4A373] rounded-2xl px-3 sm:px-4 py-2 sm:py-2.5 shadow-xs flex items-center justify-between gap-2 transition">
+          <button
+            type="button"
+            id="mainNotesFolderLinkBtn"
+            onClick={() => setIsNotesFolderOpen(true)}
+            className="flex items-center gap-2 sm:gap-2.5 text-left group cursor-pointer"
+          >
+            <div className="w-8 h-8 rounded-xl bg-[#FAF0CA] border border-[#E0A96D] flex items-center justify-center text-lg group-hover:scale-105 transition-transform shadow-2xs">
+              📁
+            </div>
+            <div>
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                <span className="font-extrabold text-xs sm:text-sm text-[#582F0E] group-hover:text-[#E76F51] transition-colors">
+                  備忘筆記資料夾
+                </span>
+                <span className="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full bg-[#FAF0CA] text-[#856404] font-bold border border-[#FFEBAA]">
+                  本月 {notesCountThisMonth} 則 • 累計 {totalNotesCount} 則
+                </span>
+              </div>
+              <p className="text-[11px] text-[#9C6644] hidden sm:block">
+                所有日期備忘、公事與看診筆記統一收納於此資料夾，點擊即可開啟瀏覽與搜尋
+              </p>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            id="mainWriteTodayNoteLinkBtn"
+            onClick={() => handleOpenNote(todayKey)}
+            className="text-xs px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#FAF0CA] hover:bg-[#F4D35E] text-[#6F441F] font-bold border border-[#E0A96D] flex items-center gap-1 shadow-2xs transition active:scale-95 cursor-pointer whitespace-nowrap flex-shrink-0"
+          >
+            <span>📝 寫今日筆記</span>
+          </button>
+        </div>
 
         {/* 7 Great Oracle Sanctuaries */}
         <OracleSection />
@@ -357,6 +402,17 @@ export default function App() {
         onDeleteNote={handleDeleteNote}
         stamps={noteModalDate ? customStamps[noteModalDate] || [] : []}
         onToggleStamp={handleToggleStampForDate}
+      />
+
+      {/* Notes Folder Modal */}
+      <NotesFolderModal
+        isOpen={isNotesFolderOpen}
+        onClose={() => setIsNotesFolderOpen(false)}
+        currentYear={currentYear}
+        currentMonth={currentMonth}
+        customNotes={customNotes}
+        customStamps={customStamps}
+        onOpenNote={handleOpenNote}
       />
 
       {/* Floating Toast Notification */}
