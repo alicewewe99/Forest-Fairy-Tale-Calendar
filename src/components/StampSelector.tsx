@@ -65,6 +65,21 @@ export const StampSelector: React.FC<StampSelectorProps> = ({
       </div>
 
       <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar" id="stampSelectorList">
+        {/* Clear / Eraser Button (Moved to the very front) */}
+        <button
+          id="stampBtn-CLEAR"
+          onClick={() => onSelectStamp('CLEAR')}
+          className={`min-h-[36px] px-3 py-1 rounded-xl text-xs sm:text-sm font-extrabold shadow-xs transition active:scale-90 flex items-center gap-1.5 whitespace-nowrap cursor-pointer flex-shrink-0 ${
+            selectedStamp === 'CLEAR'
+              ? 'bg-[#E76F51] border-2 border-[#B23B1E] ring-2 ring-[#E76F51]/40 text-white'
+              : 'bg-[#E6CCB2] border border-[#9C6644] text-[#582F0E] hover:bg-[#DDB892]'
+          }`}
+          title="切換清除模式，點擊日期即可擦除該日所有印章"
+        >
+          <Eraser className="w-3.5 h-3.5" />
+          <span>清除圖示</span>
+        </button>
+
         {/* Date Note Button */}
         <button
           id="stampBtn-NOTE"
@@ -117,21 +132,6 @@ export const StampSelector: React.FC<StampSelectorProps> = ({
             </button>
           );
         })}
-
-        {/* Clear / Eraser Button */}
-        <button
-          id="stampBtn-CLEAR"
-          onClick={() => onSelectStamp('CLEAR')}
-          className={`min-h-[36px] px-3 py-1 rounded-xl text-xs sm:text-sm font-extrabold shadow-xs transition active:scale-90 flex items-center gap-1.5 whitespace-nowrap cursor-pointer flex-shrink-0 ${
-            selectedStamp === 'CLEAR'
-              ? 'bg-[#E76F51] border-2 border-[#B23B1E] ring-2 ring-[#E76F51]/40 text-white'
-              : 'bg-[#E6CCB2] border border-[#9C6644] text-[#582F0E] hover:bg-[#DDB892]'
-          }`}
-          title="切換清除模式，點擊日期即可擦除該日所有印章"
-        >
-          <Eraser className="w-3.5 h-3.5" />
-          <span>清除圖示</span>
-        </button>
       </div>
     </div>
   );
