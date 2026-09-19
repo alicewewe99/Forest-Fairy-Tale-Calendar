@@ -299,14 +299,6 @@ export default function App() {
           onNextMonth={handleNextMonth}
         />
 
-        {/* Quick Stamp Marker Bar */}
-        <StampSelector
-          selectedStamp={selectedStamp}
-          onSelectStamp={setSelectedStamp}
-          onOpenNotesFolder={() => setIsNotesFolderOpen(true)}
-          notesCount={totalNotesCount}
-        />
-
         {/* Calendar Grid (Strict fixed 42 cells size & pink holiday markers & 📝 note icons) */}
         <CalendarGrid
           currentYear={currentYear}
@@ -317,6 +309,14 @@ export default function App() {
           onCellClick={handleCellClick}
           onOpenNote={handleOpenNote}
           onOpenNotesFolder={() => setIsNotesFolderOpen(true)}
+        />
+
+        {/* Quick Stamp Marker Bar (Moved below calendar, 2-row layout) */}
+        <StampSelector
+          selectedStamp={selectedStamp}
+          onSelectStamp={setSelectedStamp}
+          onOpenNotesFolder={() => setIsNotesFolderOpen(true)}
+          notesCount={totalNotesCount}
         />
 
         {/* Notes Folder Link Bar (Notes unified in folder instead of expanded list) */}
