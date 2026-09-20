@@ -4,3 +4,5 @@ export * from './angelCardsData';
 export * from './goodGodData';
 export * from './moonOracleData';
 export * from './loveAndAnswersData';
+export * from './loveOraclePoemData';
+

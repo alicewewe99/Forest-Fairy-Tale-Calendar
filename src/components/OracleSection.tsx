@@ -10,11 +10,13 @@ import {
   YES_NO_ORACLES
 } from '../data/oracleData';
 import { RainbowCard, TempleLot, AngelCard, GoodGodCard, MoonOracleCard, LoveBookAnswer, YesNoOracle } from '../types';
+import { LovePoemSection } from './LovePoemSection';
 
-type OracleTab = 'rainbow' | 'temple' | 'angel' | 'goodGod' | 'moon' | 'loveBook' | 'yesNo';
+type OracleTab = 'lovePoem' | 'rainbow' | 'temple' | 'angel' | 'goodGod' | 'moon' | 'loveBook' | 'yesNo';
 
 export const OracleSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<OracleTab>('rainbow');
+
 
   // State for each deck
   const [rainbowResult, setRainbowResult] = useState<{ card: RainbowCard; quote: string } | null>(null);
@@ -80,10 +82,13 @@ export const OracleSection: React.FC = () => {
         <div className="flex items-center gap-2">
           <span className="text-2xl">🔮</span>
           <div>
-            <h2 className="text-base sm:text-lg font-black text-[#43281C] flex items-center gap-1.5">
+            <h2 className="text-base sm:text-lg font-black text-[#43281C] flex items-center gap-1.5 flex-wrap">
               <span>每日心靈占卜與神諭殿堂</span>
               <span className="text-xs bg-[#E76F51] text-white px-2 py-0.5 rounded-full font-bold">
-                7大指引體系
+                8大指引體系
+              </span>
+              <span className="text-xs bg-[#D8577B] text-white px-2 py-0.5 rounded-full font-bold">
+                含佛化人生愛情籤詩卡
               </span>
             </h2>
             <p className="text-[11px] text-[#7F5539]">
@@ -96,6 +101,18 @@ export const OracleSection: React.FC = () => {
       {/* Tabs Navigation (Distinctly separates Love Book and Yes/No per request) */}
       <div className="flex items-center gap-1.5 overflow-x-auto pb-2 no-scrollbar" id="oracleTabsBar">
         <button
+          id="tabBtn-lovePoem"
+          onClick={() => setActiveTab('lovePoem')}
+          className={`px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1 whitespace-nowrap transition cursor-pointer flex-shrink-0 ${
+            activeTab === 'lovePoem'
+              ? 'bg-[#E76F51] text-white shadow-xs ring-2 ring-[#E76F51]/30'
+              : 'bg-[#FFF0F3] border border-[#F4ACB7] text-[#800F2F] hover:bg-[#FFE5EC]'
+          }`}
+        >
+          <span>💖 【佛化人生】愛情籤詩卡</span>
+        </button>
+
+        <button
           id="tabBtn-rainbow"
           onClick={() => setActiveTab('rainbow')}
           className={`px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1 whitespace-nowrap transition cursor-pointer flex-shrink-0 ${
@@ -106,6 +123,7 @@ export const OracleSection: React.FC = () => {
         >
           <span>🌈 彩虹卡</span>
         </button>
+
 
         <button
           id="tabBtn-temple"
@@ -179,6 +197,9 @@ export const OracleSection: React.FC = () => {
           <span>⚖️ YES / NO 指引</span>
         </button>
       </div>
+
+      {/* Tab Content 0: 【佛化人生】 愛情籤詩卡 (Love Poem & Story Cards) */}
+      {activeTab === 'lovePoem' && <LovePoemSection />}
 
       {/* Tab Content 1: 彩虹卡 (Rainbow Cards) */}
       {activeTab === 'rainbow' && (

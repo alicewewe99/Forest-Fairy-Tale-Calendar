@@ -79,3 +79,31 @@ export interface YesNoOracle {
   desc: string;
   advice: string;
 }
+
+export interface LovePoemCard {
+  id: number;
+  title: string;
+  author: string;
+  dynasty: string;
+  poem: string[];
+  allusion: string;
+  coreMeaning: string;
+  stageAdvice: {
+    single: string;
+    ambiguous: string;
+    dating: string;
+    married: string;
+    reunion: string;
+  };
+  blessing: string;
+}
+
+export interface LoveStoryCard {
+  id: number;
+  title: string;
+  theme: string;
+  story: string;
+  insight: string;
+  advice: string;
+}
+
